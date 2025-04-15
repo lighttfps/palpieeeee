@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Melhores Palpites do Dia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+        h1 { color: #333; }
+        #palpites { margin-top: 20px; }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #218838; }
+        .palpite {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Palpites Quentes do Dia 🔥</h1>
+    <button onclick="atualizarPalpites()">Atualizar Palpites</button>
+    <div id="palpites">
+        <p>Carregando palpites...</p>
+    </div>
+
+    <script>
+        async function atualizarPalpites() {
+            const response = await fetch('palpites.json');
+            const data = await response.json();
+            const container = document.getElementById('palpites');
+            container.innerHTML = '';
+            data.palpites.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'palpite';
+                el.innerHTML = `<strong>${p.jogo}</strong><br>Palpite: ${p.palpite}`;
+                container.appendChild(el);
+            });
+        }
+        atualizarPalpites();
+    </script>
+</body>
+</html>
